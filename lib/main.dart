@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(DemoApp());
 
-class MyApp extends StatelessWidget {
+class DemoApp extends StatelessWidget {
+
+  //初始化数据源
+  final List<String> entries = <String>['A', 'B', 'C'];
+  final List<int> colorCodes = <int>[600, 500, 100];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
+    return new MaterialApp(
+      title: 'listview',
+      home: new Scaffold(
         appBar: AppBar(
-          title: Text('Flutter ListView'),
+          title: new Text('listview'),
         ),
-        body: ListView(
-          children: <Widget>[
-            Container(
+        body :new ListView.separated(
+          physics: BouncingScrollPhysics(),
+          itemCount: entries.length,
+          itemBuilder: (context,index){
+            return Container(
               height: 50,
-              color: Colors.amber[600],
-              child: const Center(child: Text('Entry A')),
-            ),
-            Container(
-              height: 50,
-              color: Colors.amber[500],
-              child: const Center(child: Text('Entry B')),
-            ),
-            Container(
-              height: 50,
-              color: Colors.amber[100],
-              child: const Center(child: Text('Entry C')),
-            ),
-          ],
+              color: Colors.amber[colorCodes[index]],
+              child: Center(child: Text('Entry ${entries[index]}')),
+            );
+          },
+          //分割构造器
+          separatorBuilder: (context,index){
+            //分割组件
+            return new Divider(color: Colors.grey,);
+          },
         ),
       ),
     );
